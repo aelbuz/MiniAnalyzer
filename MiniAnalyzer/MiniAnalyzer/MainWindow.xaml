@@ -1,0 +1,43 @@
+﻿<Window x:Class="MiniAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tree="clr-namespace:MiniAnalyzer.Tree"
+        xmlns:common="clr-namespace:Views.Common;assembly=Views.Common"
+        Title="Mini Analyzer"
+        Height="720" Width="1280"
+        Icon="Icon.ico"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Load JSON File" Command="{Binding LoadJsonFileCommand}"/>
+                <MenuItem Header="Load JSON Text" Command="{Binding LoadJsonTextCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1" Visibility="{Binding IsLoadFileVisible, Converter={x:Static common:BooleanToVisibilityConverter.Default}}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Load JSON File" Command="{Binding LoadJsonFileCommand}" Width="128" Height="32" Margin="0,0,10,0"/>
+                <Button Content="Load JSON Text" Command="{Binding LoadJsonTextCommand}" Width="128" Height="32"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="{Binding IsLoadFileVisible, Converter={x:Static common:BooleanToVisibilityConverter.Inverted}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <tree:ResultTreeView Grid.Column="0" DataContext="{Binding ResultTree}"/>
+            <tree:RootResultView Grid.Column="1" DataContext="{Binding RootResult}"/>
+            <tree:TimingResultView Grid.Column="1" DataContext="{Binding TimingResult}"/>
+            <tree:CustomTimingResultView Grid.Column="1" DataContext="{Binding CustomTimingResult}"/>
+        </Grid>
+    </Grid>
+</Window>

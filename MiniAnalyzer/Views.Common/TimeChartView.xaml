@@ -1,0 +1,6 @@
+﻿<UserControl x:Class="Views.Common.TimeChartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid x:Name="grid" Margin="5" Height="30"/>
+</UserControl>

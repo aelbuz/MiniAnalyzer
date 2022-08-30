@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MiniAnalyzer.Tree.CustomTimingResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Visibility="{Binding IsVisible}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="IsReadOnlyCaretVisible" Value="True"/>
+                    <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Id:" Grid.Column="0" Grid.Row="0"/>
+            <TextBox Text="{Binding Id, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
+
+            <Label Content="Custom Timing Key:" Grid.Column="0" Grid.Row="1"/>
+            <TextBox Text="{Binding CustomTimingKey, Mode=OneWay}" Grid.Column="1" Grid.Row="1"/>
+
+            <Label Content="Execute Type:" Grid.Column="0" Grid.Row="2"/>
+            <TextBox Text="{Binding ExecuteType, Mode=OneWay}" Grid.Column="1" Grid.Row="2"/>
+
+            <Label Content="Duration Milliseconds:" Grid.Column="0" Grid.Row="3"/>
+            <TextBox Text="{Binding DurationMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
+
+            <Label Content="Start Milliseconds:" Grid.Column="0" Grid.Row="4"/>
+            <TextBox Text="{Binding StartMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="4"/>
+
+            <Label Content="First Fetch Duration Milliseconds:" Grid.Column="0" Grid.Row="5"/>
+            <TextBox Text="{Binding FirstFetchDurationMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="5"/>
+
+            <Label Content="Command String:" Grid.Column="0" Grid.Row="6"/>
+            <TextBox Text="{Binding CommandString, Mode=OneWay}" Grid.Column="1" Grid.Row="6"/>
+
+            <Label Content="Stack Trace Snippet:" Grid.Column="0" Grid.Row="7"/>
+            <TextBox Text="{Binding StackTraceSnippet, Mode=OneWay}" Grid.Column="1" Grid.Row="7"/>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

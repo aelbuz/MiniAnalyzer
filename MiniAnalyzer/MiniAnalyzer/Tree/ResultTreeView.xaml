@@ -1,0 +1,26 @@
+﻿<TreeView x:Class="MiniAnalyzer.Tree.ResultTreeView"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:treeItem="clr-namespace:MiniAnalyzer.Tree.TreeItem"
+          ItemsSource="{Binding Items}"
+          SelectedItemChanged="TreeViewSelectedItemChanged">
+
+    <TreeView.Resources>
+        <Style TargetType="TreeViewItem">
+            <Setter Property="IsExpanded" Value="True"/>
+        </Style>
+
+        <HierarchicalDataTemplate DataType="{x:Type treeItem:RootItemViewModel}" ItemsSource="{Binding Children}">
+            <TextBlock Text="{Binding Header}"/>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type treeItem:ParentTimingItemViewModel}" ItemsSource="{Binding Children}">
+            <TextBlock Text="{Binding Header}"/>
+        </HierarchicalDataTemplate>
+        <DataTemplate DataType="{x:Type treeItem:CustomTimingItemViewModel}">
+            <TextBlock Text="{Binding Header}" Foreground="MediumTurquoise"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type treeItem:LeafTimingItemViewModel}">
+            <TextBlock Text="{Binding Header}"/>
+        </DataTemplate>
+    </TreeView.Resources>
+</TreeView>
