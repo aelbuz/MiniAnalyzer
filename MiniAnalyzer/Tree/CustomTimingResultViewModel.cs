@@ -29,6 +29,7 @@ namespace MiniAnalyzer.Tree
                 FirstFetchDurationMilliseconds = customTiming.FirstFetchDurationMilliseconds;
                 CommandString = customTiming.CommandString;
                 StackTraceSnippet = customTiming.StackTraceSnippet;
+                Errored = customTiming.Errored;
 
                 IsVisible = Visibility.Visible;
             });
@@ -180,6 +181,25 @@ namespace MiniAnalyzer.Tree
                 {
                     stackTraceSnippet = value;
                     OnPropertyChanged(nameof(StackTraceSnippet));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Errored Property
+
+        private bool errored;
+
+        public bool Errored
+        {
+            get => errored;
+            private set
+            {
+                if (value != errored)
+                {
+                    errored = value;
+                    OnPropertyChanged(nameof(Errored));
                 }
             }
         }

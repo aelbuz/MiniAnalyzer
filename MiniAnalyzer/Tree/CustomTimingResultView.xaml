@@ -31,6 +31,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Content="Id:" Grid.Column="0" Grid.Row="0"/>
@@ -54,8 +55,11 @@
             <Label Content="Stack Trace Snippet:" Grid.Column="0" Grid.Row="6"/>
             <TextBox Text="{Binding StackTraceSnippet, Mode=OneWay}" Grid.Column="1" Grid.Row="6"/>
 
-            <Label Content="Command String:" Grid.Column="0" Grid.Row="7"/>
-            <TextBox Text="{Binding CommandString, Mode=OneWay}" Grid.Column="1" Grid.Row="7"/>
+            <Label Content="Errored:" Grid.Column="0" Grid.Row="7"/>
+            <TextBox Text="{Binding Errored, Mode=OneWay}" Grid.Column="1" Grid.Row="7"/>
+
+            <Label Content="Command String:" Grid.Column="0" Grid.Row="8"/>
+            <TextBox Text="{Binding CommandString, Mode=OneWay}" Grid.Column="1" Grid.Row="8"/>
         </Grid>
     </ScrollViewer>
 </UserControl>
