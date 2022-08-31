@@ -28,6 +28,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -43,7 +45,32 @@
             <Label Content="Start Milliseconds:" Grid.Column="0" Grid.Row="3"/>
             <TextBox Text="{Binding StartMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
 
-            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" VerticalAlignment="Bottom"/>
+            <Label Content="Timing Debug Info" Grid.Column="0" Grid.Row="4"/>
+
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5">
+                <Grid.Resources>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Margin" Value="30,0,0,0"/>
+                    </Style>
+                </Grid.Resources>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Rich Html Stack:" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Text="{Binding RichHtmlStack, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
+
+                <Label Content="Common Stack Start:" Grid.Column="0" Grid.Row="1"/>
+                <TextBox Text="{Binding CommonStackStart, Mode=OneWay}" Grid.Column="1" Grid.Row="1"/>
+            </Grid>
+
+            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Bottom"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

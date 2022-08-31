@@ -27,6 +27,8 @@ namespace MiniAnalyzer.Tree
                 Name = timing.Name;
                 DurationMilliseconds = timing.DurationMilliseconds;
                 StartMilliseconds = timing.StartMilliseconds;
+                RichHtmlStack = timing.DebugInfo?.RichHtmlStack;
+                CommonStackStart = timing.DebugInfo?.CommonStackStart;
 
                 await TimeChart.UpdateTimesAsync(timing);
 
@@ -104,6 +106,44 @@ namespace MiniAnalyzer.Tree
                 {
                     startMilliseconds = value;
                     OnPropertyChanged(nameof(StartMilliseconds));
+                }
+            }
+        }
+
+        #endregion
+
+        #region RichHtmlStack Property
+
+        private string? richHtmlStack;
+
+        public string? RichHtmlStack
+        {
+            get => richHtmlStack;
+            private set
+            {
+                if (value != richHtmlStack)
+                {
+                    richHtmlStack = value;
+                    OnPropertyChanged(nameof(RichHtmlStack));
+                }
+            }
+        }
+
+        #endregion
+
+        #region CommonStackStart Property
+
+        private int? commonStackStart;
+
+        public int? CommonStackStart
+        {
+            get => commonStackStart;
+            private set
+            {
+                if (value != commonStackStart)
+                {
+                    commonStackStart = value;
+                    OnPropertyChanged(nameof(CommonStackStart));
                 }
             }
         }

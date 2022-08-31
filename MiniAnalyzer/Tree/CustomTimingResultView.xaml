@@ -51,11 +51,11 @@
             <Label Content="First Fetch Duration Milliseconds:" Grid.Column="0" Grid.Row="5"/>
             <TextBox Text="{Binding FirstFetchDurationMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="5"/>
 
-            <Label Content="Command String:" Grid.Column="0" Grid.Row="6"/>
-            <TextBox Text="{Binding CommandString, Mode=OneWay}" Grid.Column="1" Grid.Row="6"/>
+            <Label Content="Stack Trace Snippet:" Grid.Column="0" Grid.Row="6"/>
+            <TextBox Text="{Binding StackTraceSnippet, Mode=OneWay}" Grid.Column="1" Grid.Row="6"/>
 
-            <Label Content="Stack Trace Snippet:" Grid.Column="0" Grid.Row="7"/>
-            <TextBox Text="{Binding StackTraceSnippet, Mode=OneWay}" Grid.Column="1" Grid.Row="7"/>
+            <Label Content="Command String:" Grid.Column="0" Grid.Row="7"/>
+            <TextBox Text="{Binding CommandString, Mode=OneWay}" Grid.Column="1" Grid.Row="7"/>
         </Grid>
     </ScrollViewer>
 </UserControl>
