@@ -21,10 +21,6 @@ namespace MiniAnalyzer.Tree.TreeItem
                         children.Add(new ParentTimingItemViewModel(child));
                     }
                 }
-                else
-                {
-                    children.Add(new LeafTimingItemViewModel(profilerResult.Root));
-                }
 
                 if (profilerResult.Root.CustomTimings != null)
                 {
