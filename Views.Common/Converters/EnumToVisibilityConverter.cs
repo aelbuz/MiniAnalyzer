@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Views.Common
+namespace Views.Common.Converters
 {
     public class EnumToVisibilityConverter : IValueConverter
     {

@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:MiniAnalyzer"
         xmlns:tree="clr-namespace:MiniAnalyzer.Tree"
         xmlns:detail="clr-namespace:MiniAnalyzer.Tree.Detail"
-        xmlns:common="clr-namespace:Views.Common;assembly=Views.Common"
+        xmlns:conv="clr-namespace:Views.Common.Converters;assembly=Views.Common"
         Title="Mini Analyzer"
         Height="720" Width="1280"
         Icon="Icon.ico"
@@ -34,17 +34,17 @@
             <TextBlock Text="{Binding JsonFileName}"
                        Grid.Column="1"
                        Margin="0,0,5,0"
-                       Visibility="{Binding LoadType, Converter={x:Static common:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonLoadType.File}}"/>
+                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonLoadType.File}}"/>
         </Grid>
 
-        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static common:BooleanToVisibilityConverter.Default}}">
+        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Default}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Load JSON File" Command="{Binding LoadJsonFileCommand}" Width="128" Height="32" Margin="0,0,10,0"/>
                 <Button Content="Load JSON Text" Command="{Binding LoadJsonTextCommand}" Width="128" Height="32"/>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static common:BooleanToVisibilityConverter.Inverted}}">
+        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Inverted}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />
