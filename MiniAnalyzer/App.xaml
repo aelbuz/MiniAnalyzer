@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Views.Common;component/Styles/DataGridStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Views.Common;component/Styles/LabelStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Views.Common;component/Styles/TextBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>

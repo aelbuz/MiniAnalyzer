@@ -13,15 +13,7 @@
         </Grid.RowDefinitions>
 
         <Label Content="Custom Links" Grid.Column="0" Grid.Row="0"/>
-        <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-                      Margin="35,0,5,5"
-                      ItemsSource="{Binding CustomLinks}"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      CanUserResizeRows="False"
-                      HeadersVisibility="Column"
-                      IsReadOnly="True">
+        <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding CustomLinks}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}"/>

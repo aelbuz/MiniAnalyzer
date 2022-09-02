@@ -26,15 +26,7 @@
             <Label Content="Redirect Count:" Grid.Column="0" Grid.Row="0" Style="{StaticResource InnerLabelStyle}"/>
             <TextBox Text="{Binding RedirectCount, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
 
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-                      Margin="35,0,5,0"
-                      ItemsSource="{Binding ClientTimings}"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      CanUserResizeRows="False"
-                      HeadersVisibility="Column"
-                      IsReadOnly="True">
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding ClientTimings}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Name}"/>
