@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="MiniAnalyzer.Tree.Detail.TimingResultView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MiniAnalyzer.Tree.Detail"
              xmlns:common="clr-namespace:Views.Common;assembly=Views.Common"
              Visibility="{Binding Visibility}">
 
@@ -29,7 +30,6 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -45,32 +45,9 @@
             <Label Content="Start Milliseconds:" Grid.Column="0" Grid.Row="3"/>
             <TextBox Text="{Binding StartMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
 
-            <Label Content="Timing Debug Info" Grid.Column="0" Grid.Row="4"/>
+            <local:TimingDebugInfoView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" DataContext="{Binding TimingDebugInfo}" Visibility="{Binding Visibility}"/>
 
-            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5">
-                <Grid.Resources>
-                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="Margin" Value="30,0,0,0"/>
-                    </Style>
-                </Grid.Resources>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Label Content="Rich Html Stack:" Grid.Column="0" Grid.Row="0"/>
-                <TextBox Text="{Binding RichHtmlStack, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
-
-                <Label Content="Common Stack Start:" Grid.Column="0" Grid.Row="1"/>
-                <TextBox Text="{Binding CommonStackStart, Mode=OneWay}" Grid.Column="1" Grid.Row="1"/>
-            </Grid>
-
-            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Bottom"/>
+            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Bottom"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

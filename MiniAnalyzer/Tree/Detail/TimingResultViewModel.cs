@@ -11,6 +11,7 @@ namespace MiniAnalyzer.Tree.Detail
         {
             Visibility = Visibility.Collapsed;
 
+            TimingDebugInfo = new TimingDebugInfoViewModel();
             TimeChart = new TimeChartView();
         }
 
@@ -27,9 +28,8 @@ namespace MiniAnalyzer.Tree.Detail
                 Name = timing.Name;
                 DurationMilliseconds = timing.DurationMilliseconds;
                 StartMilliseconds = timing.StartMilliseconds;
-                RichHtmlStack = timing.DebugInfo?.RichHtmlStack;
-                CommonStackStart = timing.DebugInfo?.CommonStackStart;
 
+                await TimingDebugInfo.LoadContentAsync(timing.DebugInfo);
                 await TimeChart.UpdateTimesAsync(timing);
 
                 Visibility = Visibility.Visible;
@@ -112,44 +112,6 @@ namespace MiniAnalyzer.Tree.Detail
 
         #endregion
 
-        #region RichHtmlStack Property
-
-        private string? richHtmlStack;
-
-        public string? RichHtmlStack
-        {
-            get => richHtmlStack;
-            private set
-            {
-                if (value != richHtmlStack)
-                {
-                    richHtmlStack = value;
-                    OnPropertyChanged(nameof(RichHtmlStack));
-                }
-            }
-        }
-
-        #endregion
-
-        #region CommonStackStart Property
-
-        private int? commonStackStart;
-
-        public int? CommonStackStart
-        {
-            get => commonStackStart;
-            private set
-            {
-                if (value != commonStackStart)
-                {
-                    commonStackStart = value;
-                    OnPropertyChanged(nameof(CommonStackStart));
-                }
-            }
-        }
-
-        #endregion 
-
         #region Visibility Property
 
         private Visibility visibility;
@@ -168,6 +130,8 @@ namespace MiniAnalyzer.Tree.Detail
         }
 
         #endregion
+
+        public TimingDebugInfoViewModel TimingDebugInfo { get; private set; }
 
         public TimeChartView TimeChart { get; private set; }
     }
