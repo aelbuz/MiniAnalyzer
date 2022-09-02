@@ -11,6 +11,7 @@ namespace MiniAnalyzer.Tree.Detail
         {
             Visibility = Visibility.Collapsed;
 
+            CustomLinks = new CustomLinksViewModel();
             ClientTimings = new ClientTimingsViewModel();
             TimeChart = new TimeChartView();
         }
@@ -31,6 +32,7 @@ namespace MiniAnalyzer.Tree.Detail
                 MachineName = profilerResult.MachineName;
                 User = profilerResult.User;
 
+                await CustomLinks.LoadContentAsync(profilerResult.CustomLinks);
                 await ClientTimings.LoadContentAsync(profilerResult.ClientTimings);
 
                 if (profilerResult.Root != null)
@@ -174,6 +176,8 @@ namespace MiniAnalyzer.Tree.Detail
         }
 
         #endregion
+
+        public CustomLinksViewModel CustomLinks { get; private set; }
 
         public ClientTimingsViewModel ClientTimings { get; private set; }
 

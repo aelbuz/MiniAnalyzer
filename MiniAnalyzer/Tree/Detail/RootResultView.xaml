@@ -18,6 +18,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -36,9 +37,11 @@
             <Label Content="Machine Name:" Grid.Column="0" Grid.Row="4"/>
             <TextBox Text="{Binding MachineName, Mode=OneWay}" Grid.Column="1" Grid.Row="4"/>
 
-            <local:ClientTimingsView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" DataContext="{Binding ClientTimings}" Visibility="{Binding Visibility}"/>
+            <local:CustomLinksView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" DataContext="{Binding CustomLinks}" Visibility="{Binding Visibility}"/>
 
-            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" VerticalAlignment="Bottom"/>
+            <local:ClientTimingsView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" DataContext="{Binding ClientTimings}" Visibility="{Binding Visibility}"/>
+
+            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" VerticalAlignment="Bottom"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

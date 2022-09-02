@@ -21,14 +21,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Content="Redirect Count:" Grid.Column="0" Grid.Row="0" Style="{StaticResource InnerLabelStyle}"/>
             <TextBox Text="{Binding RedirectCount, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
 
-            <Label Content="Timings" Grid.Column="0" Grid.Row="1" Style="{StaticResource InnerLabelStyle}"/>
-            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+            <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
                       Margin="35,0,5,0"
                       ItemsSource="{Binding ClientTimings}"
                       AutoGenerateColumns="False"
