@@ -14,8 +14,8 @@ namespace Views.Common
             this.isInverted = isInverted;
         }
 
-        public static BooleanToVisibilityConverter Default = new BooleanToVisibilityConverter(false);
-        public static BooleanToVisibilityConverter Inverted = new BooleanToVisibilityConverter(true);
+        public static readonly BooleanToVisibilityConverter Default = new BooleanToVisibilityConverter(false);
+        public static readonly BooleanToVisibilityConverter Inverted = new BooleanToVisibilityConverter(true);
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

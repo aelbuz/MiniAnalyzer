@@ -16,7 +16,7 @@ namespace MiniAnalyzer
     {
         public MainWindowViewModel()
         {
-            IsLoadFileVisible = true;
+            IsLoaded = true;
             LoadJsonFileCommand = new RelayCommand(async () => await OpenJsonFileAsync());
             LoadJsonTextCommand = new RelayCommand(async () => await GetJsonTextAsync());
 
@@ -73,24 +73,62 @@ namespace MiniAnalyzer
 
         public ICommand LoadJsonTextCommand { get; private set; }
 
-        #region IsLoadFileVisible Property
+        #region IsLoaded Property
 
-        private bool isLoadFileVisible;
+        private bool isLoaded;
 
-        public bool IsLoadFileVisible
+        public bool IsLoaded
         {
-            get => isLoadFileVisible;
+            get => isLoaded;
             private set
             {
-                if (isLoadFileVisible != value)
+                if (isLoaded != value)
                 {
-                    isLoadFileVisible = value;
-                    OnPropertyChanged(nameof(IsLoadFileVisible));
+                    isLoaded = value;
+                    OnPropertyChanged(nameof(IsLoaded));
                 }
             }
         }
 
         #endregion
+
+        #region LoadType Property
+
+        private JsonLoadType? loadType;
+
+        public JsonLoadType? LoadType
+        {
+            get => loadType;
+            private set
+            {
+                if (value != loadType)
+                {
+                    loadType = value;
+                    OnPropertyChanged(nameof(LoadType));
+                }
+            }
+        }
+
+        #endregion
+
+        #region JsonFileName Property
+
+        private string? jsonFileName;
+
+        public string? JsonFileName
+        {
+            get => jsonFileName;
+            private set
+            {
+                if (value != jsonFileName)
+                {
+                    jsonFileName = value;
+                    OnPropertyChanged(nameof(JsonFileName));
+                }
+            }
+        }
+
+        #endregion 
 
         public ResultTreeViewModel ResultTree { get; private set; }
 
@@ -123,11 +161,17 @@ namespace MiniAnalyzer
             if (!string.IsNullOrWhiteSpace(filePath))
             {
                 string jsonContent = File.ReadAllText(filePath);
-                await LoadJsonAsync(jsonContent);
+                bool success = await LoadJsonAsync(jsonContent);
+
+                if (success)
+                {
+                    LoadType = JsonLoadType.File;
+                    JsonFileName = filePath;
+                }
             }
         }
 
-        private async Task LoadJsonAsync(string? jsonContent)
+        private async Task<bool> LoadJsonAsync(string? jsonContent)
         {
             MiniProfiler? miniProfiler = null;
 
@@ -140,10 +184,12 @@ namespace MiniAnalyzer
             {
                 HideAllDetailsView();
                 await LoadContentAsync(miniProfiler);
+                return true;
             }
             else
             {
-                MessageBox.Show("Given JSON content is not valid.", "JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Application.Current.MainWindow, "Given JSON content is not valid.", "JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
         }
 
@@ -154,14 +200,20 @@ namespace MiniAnalyzer
                 if (!multilineTextBox.IsCanceled)
                 {
                     string? jsonContent = multilineTextBox.Text;
-                    await LoadJsonAsync(jsonContent);
+                    bool success = await LoadJsonAsync(jsonContent);
+
+                    if (success)
+                    {
+                        LoadType = JsonLoadType.Text;
+                        JsonFileName = string.Empty;
+                    }
                 }
             }
         }
 
         private async Task LoadContentAsync(MiniProfiler miniProfiler)
         {
-            IsLoadFileVisible = false;
+            IsLoaded = false;
             await ResultTree.LoadTreeAsync(miniProfiler);
         }
 
