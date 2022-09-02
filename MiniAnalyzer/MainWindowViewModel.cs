@@ -1,6 +1,7 @@
 ﻿using Common.Types;
 using Microsoft.Win32;
 using MiniAnalyzer.Tree;
+using MiniAnalyzer.Tree.Detail;
 using MiniAnalyzer.Tree.TreeItem;
 using System;
 using System.IO;

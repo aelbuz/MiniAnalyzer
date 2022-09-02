@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:MiniAnalyzer"
         xmlns:tree="clr-namespace:MiniAnalyzer.Tree"
+        xmlns:detail="clr-namespace:MiniAnalyzer.Tree.Detail"
         xmlns:common="clr-namespace:Views.Common;assembly=Views.Common"
         Title="Mini Analyzer"
         Height="720" Width="1280"
@@ -50,9 +51,9 @@
             </Grid.ColumnDefinitions>
 
             <tree:ResultTreeView Grid.Column="0" DataContext="{Binding ResultTree}"/>
-            <tree:RootResultView Grid.Column="1" DataContext="{Binding RootResult}"/>
-            <tree:TimingResultView Grid.Column="1" DataContext="{Binding TimingResult}"/>
-            <tree:CustomTimingResultView Grid.Column="1" DataContext="{Binding CustomTimingResult}"/>
+            <detail:RootResultView Grid.Column="1" DataContext="{Binding RootResult}"/>
+            <detail:TimingResultView Grid.Column="1" DataContext="{Binding TimingResult}"/>
+            <detail:CustomTimingResultView Grid.Column="1" DataContext="{Binding CustomTimingResult}"/>
         </Grid>
     </Grid>
 </Window>

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Views.Common;
 
-namespace MiniAnalyzer.Tree
+namespace MiniAnalyzer.Tree.Detail
 {
     public class TimingResultViewModel : ViewModelBase
     {
