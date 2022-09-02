@@ -33,8 +33,8 @@ namespace MiniAnalyzer
         {
             if (e is RootItemViewModel rootResult)
             {
-                TimingResult.IsVisible = Visibility.Collapsed;
-                CustomTimingResult.IsVisible = Visibility.Collapsed;
+                TimingResult.Visibility = Visibility.Collapsed;
+                CustomTimingResult.Visibility = Visibility.Collapsed;
 
                 await RootResult.LoadContentAsync(rootResult.Model);
             }
@@ -42,16 +42,16 @@ namespace MiniAnalyzer
             {
                 if (e is CustomTimingItemViewModel customTimingResult)
                 {
-                    RootResult.IsVisible = Visibility.Collapsed;
-                    TimingResult.IsVisible = Visibility.Collapsed;
+                    RootResult.Visibility = Visibility.Collapsed;
+                    TimingResult.Visibility = Visibility.Collapsed;
 
                     await CustomTimingResult.LoadContentAsync(customTimingResult.Key, customTimingResult.Model);
 
                     return;
                 }
 
-                RootResult.IsVisible = Visibility.Collapsed;
-                CustomTimingResult.IsVisible = Visibility.Collapsed;
+                RootResult.Visibility = Visibility.Collapsed;
+                CustomTimingResult.Visibility = Visibility.Collapsed;
 
                 Timing? timingModel = null;
                 if (e is ParentTimingItemViewModel parentResult)
@@ -220,9 +220,9 @@ namespace MiniAnalyzer
 
         private void HideAllDetailsView()
         {
-            RootResult.IsVisible = Visibility.Collapsed;
-            TimingResult.IsVisible = Visibility.Collapsed;
-            CustomTimingResult.IsVisible = Visibility.Collapsed;
+            RootResult.Visibility = Visibility.Collapsed;
+            TimingResult.Visibility = Visibility.Collapsed;
+            CustomTimingResult.Visibility = Visibility.Collapsed;
         }
 
         #region Dispose Methods

@@ -9,7 +9,7 @@ namespace MiniAnalyzer.Tree.Detail
     {
         public RootResultViewModel()
         {
-            IsVisible = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
 
             ClientTimings = new ClientTimingsViewModel();
             TimeChart = new TimeChartView();
@@ -38,7 +38,7 @@ namespace MiniAnalyzer.Tree.Detail
                     await TimeChart.UpdateTimesAsync(profilerResult.Root);
                 }
 
-                IsVisible = Visibility.Visible;
+                Visibility = Visibility.Visible;
             });
         }
 
@@ -156,19 +156,19 @@ namespace MiniAnalyzer.Tree.Detail
 
         #endregion
 
-        #region IsVisible Property
+        #region Visibility Property
 
-        private Visibility isVisible;
+        private Visibility visibility;
 
-        public Visibility IsVisible
+        public Visibility Visibility
         {
-            get => isVisible;
+            get => visibility;
             internal set
             {
-                if (value != isVisible)
+                if (value != visibility)
                 {
-                    isVisible = value;
-                    OnPropertyChanged(nameof(IsVisible));
+                    visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
                 }
             }
         }

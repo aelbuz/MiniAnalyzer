@@ -9,7 +9,7 @@ namespace MiniAnalyzer.Tree.Detail
     {
         public CustomTimingResultViewModel()
         {
-            IsVisible = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
         }
 
         public async Task LoadContentAsync(string customTimingKey, CustomTiming customTiming)
@@ -31,7 +31,7 @@ namespace MiniAnalyzer.Tree.Detail
                 StackTraceSnippet = customTiming.StackTraceSnippet;
                 Errored = customTiming.Errored;
 
-                IsVisible = Visibility.Visible;
+                Visibility = Visibility.Visible;
             });
         }
 
@@ -206,19 +206,19 @@ namespace MiniAnalyzer.Tree.Detail
 
         #endregion 
 
-        #region IsVisible Property
+        #region Visibility Property
 
-        private Visibility isVisible;
+        private Visibility visibility;
 
-        public Visibility IsVisible
+        public Visibility Visibility
         {
-            get => isVisible;
+            get => visibility;
             internal set
             {
-                if (value != isVisible)
+                if (value != visibility)
                 {
-                    isVisible = value;
-                    OnPropertyChanged(nameof(IsVisible));
+                    visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
                 }
             }
         }
