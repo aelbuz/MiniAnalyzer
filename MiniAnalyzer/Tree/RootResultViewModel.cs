@@ -1,4 +1,5 @@
 ﻿using Common.Types;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Views.Common;
@@ -11,6 +12,7 @@ namespace MiniAnalyzer.Tree
         {
             IsVisible = Visibility.Collapsed;
 
+            ClientTimings = new ObservableCollection<ClientTiming>();
             TimeChart = new TimeChartView();
         }
 
@@ -29,6 +31,25 @@ namespace MiniAnalyzer.Tree
                 DurationMilliseconds = profilerResult.DurationMilliseconds;
                 MachineName = profilerResult.MachineName;
                 User = profilerResult.User;
+                RedirectCount = profilerResult.ClientTimings?.RedirectCount;
+
+                await Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    ClientTimings.Clear();
+
+                    if (profilerResult.ClientTimings?.Timings != null)
+                    {
+                        foreach (var clientTiming in profilerResult.ClientTimings.Timings)
+                        {
+                            ClientTimings.Add(new ClientTiming
+                            {
+                                Duration = clientTiming.Duration,
+                                Name = clientTiming.Name,
+                                Start = clientTiming.Start
+                            });
+                        }
+                    }
+                });
 
                 if (profilerResult.Root != null)
                 {
@@ -151,6 +172,25 @@ namespace MiniAnalyzer.Tree
             }
         }
 
+        #endregion
+
+        #region RedirectCount Property
+
+        private int? redirectCount;
+
+        public int? RedirectCount
+        {
+            get => redirectCount;
+            private set
+            {
+                if (value != redirectCount)
+                {
+                    redirectCount = value;
+                    OnPropertyChanged(nameof(RedirectCount));
+                }
+            }
+        }
+
         #endregion 
 
         #region IsVisible Property
@@ -171,6 +211,8 @@ namespace MiniAnalyzer.Tree
         }
 
         #endregion
+
+        public ObservableCollection<ClientTiming> ClientTimings { get; private set; }
 
         public TimeChartView TimeChart { get; private set; }
     }
