@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <Style TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="IsReadOnlyCaretVisible" Value="True"/>
+        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+</ResourceDictionary>

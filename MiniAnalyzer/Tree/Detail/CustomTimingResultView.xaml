@@ -5,19 +5,6 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
-            <Grid.Resources>
-                <Style TargetType="Label">
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Style>
-                <Style TargetType="TextBox">
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="IsReadOnly" Value="True"/>
-                    <Setter Property="IsReadOnlyCaretVisible" Value="True"/>
-                    <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                </Style>
-            </Grid.Resources>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="3*"/>

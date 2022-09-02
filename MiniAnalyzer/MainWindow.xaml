@@ -26,9 +26,9 @@
             </Grid.ColumnDefinitions>
 
             <Menu Grid.Column="0" Grid.ColumnSpan="2">
-                <MenuItem Header="File">
-                    <MenuItem Header="Load JSON File" Command="{Binding LoadJsonFileCommand}"/>
-                    <MenuItem Header="Load JSON Text" Command="{Binding LoadJsonTextCommand}"/>
+                <MenuItem Header="Load">
+                    <MenuItem Header="JSON File" Command="{Binding LoadJsonFileCommand}"/>
+                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}"/>
                 </MenuItem>
             </Menu>
             <TextBlock Text="{Binding JsonFileName}"

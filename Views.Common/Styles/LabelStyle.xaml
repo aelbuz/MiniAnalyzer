@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <Style TargetType="Label">
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="InnerLabelStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+        <Setter Property="Margin" Value="30,0,0,0"/>
+    </Style>
+</ResourceDictionary>
