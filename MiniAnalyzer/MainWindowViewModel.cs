@@ -17,8 +17,8 @@ namespace MiniAnalyzer
         public MainWindowViewModel()
         {
             IsLoadFileVisible = true;
-            LoadJsonFileCommand = new RelayCommand(async () => await OpenJsonFile());
-            LoadJsonTextCommand = new RelayCommand(async () => await GetJsonText());
+            LoadJsonFileCommand = new RelayCommand(async () => await OpenJsonFileAsync());
+            LoadJsonTextCommand = new RelayCommand(async () => await GetJsonTextAsync());
 
             ResultTree = new ResultTreeViewModel();
             ResultTree.OnSelectedItemChanged += ResultTree_OnSelectedItemChanged;
@@ -39,7 +39,6 @@ namespace MiniAnalyzer
             }
             else
             {
-
                 if (e is CustomTimingItemViewModel customTimingResult)
                 {
                     RootResult.IsVisible = Visibility.Collapsed;
@@ -101,13 +100,13 @@ namespace MiniAnalyzer
 
         public CustomTimingResultViewModel CustomTimingResult { get; private set; }
 
-        private async Task OpenJsonFile()
+        private async Task OpenJsonFileAsync()
         {
             var openFileDialog = new OpenFileDialog()
             {
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = "JSON File|*.json",
+                Filter = string.Format("JSON File|*{0}", FileConstants.JsonExtension),
                 Multiselect = false,
                 Title = "Load JSON File"
             };
@@ -115,12 +114,16 @@ namespace MiniAnalyzer
             if (openFileDialog.ShowDialog() ?? false)
             {
                 string filePath = openFileDialog.FileName;
+                await LoadJsonFileAsync(filePath);
+            }
+        }
 
-                if (!string.IsNullOrWhiteSpace(filePath))
-                {
-                    string jsonContent = File.ReadAllText(filePath);
-                    await LoadJsonAsync(jsonContent);
-                }
+        internal async Task LoadJsonFileAsync(string filePath)
+        {
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                string jsonContent = File.ReadAllText(filePath);
+                await LoadJsonAsync(jsonContent);
             }
         }
 
@@ -144,7 +147,7 @@ namespace MiniAnalyzer
             }
         }
 
-        private async Task GetJsonText()
+        private async Task GetJsonTextAsync()
         {
             using (var multilineTextBox = new MultilineTextBoxViewModel("Load JSON Text"))
             {

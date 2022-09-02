@@ -6,7 +6,10 @@
         Title="Mini Analyzer"
         Height="720" Width="1280"
         Icon="Icon.ico"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        AllowDrop="True"
+        PreviewDragOver="MainWindowPreviewDragOver"
+        Drop="MainWindowDrop">
 
     <Grid>
         <Grid.RowDefinitions>
