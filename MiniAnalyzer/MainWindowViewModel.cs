@@ -4,6 +4,7 @@ using MiniAnalyzer.Tree;
 using MiniAnalyzer.Tree.Detail;
 using MiniAnalyzer.Tree.TreeItem;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace MiniAnalyzer
         {
             IsLoaded = true;
             LoadJsonFileCommand = new RelayCommand(async () => await OpenJsonFileAsync());
+            LoadLineSeparatedJsonFileCommand = new RelayCommand(async () => await GetLineSeparatedJsonTextAsync());
             LoadJsonTextCommand = new RelayCommand(async () => await GetJsonTextAsync());
 
             ResultTree = new ResultTreeViewModel();
@@ -71,6 +73,8 @@ namespace MiniAnalyzer
         }
 
         public ICommand LoadJsonFileCommand { get; private set; }
+
+        public ICommand LoadLineSeparatedJsonFileCommand { get; private set; }
 
         public ICommand LoadJsonTextCommand { get; private set; }
 
@@ -145,7 +149,7 @@ namespace MiniAnalyzer
             {
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = string.Format("JSON File|*{0}", FileConstants.JsonExtension),
+                Filter = string.Format("JSON File|*{0}", FileConstants.JsonFileExtension),
                 Multiselect = false,
                 Title = "Load JSON File"
             };
@@ -153,11 +157,11 @@ namespace MiniAnalyzer
             if (openFileDialog.ShowDialog() ?? false)
             {
                 string filePath = openFileDialog.FileName;
-                await LoadJsonFileAsync(filePath);
+                await ReadJsonFileAsync(filePath);
             }
         }
 
-        internal async Task LoadJsonFileAsync(string filePath)
+        internal async Task ReadJsonFileAsync(string filePath)
         {
             if (!string.IsNullOrWhiteSpace(filePath))
             {
@@ -194,6 +198,82 @@ namespace MiniAnalyzer
             }
         }
 
+        private async Task GetLineSeparatedJsonTextAsync()
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Filter = string.Format("Line Separated JSON File|*{0}|Text File|*{1}", FileConstants.JsonFileExtension, FileConstants.TextFileExtension),
+                Multiselect = false,
+                Title = "Load Line Separated JSON File"
+            };
+
+            if (openFileDialog.ShowDialog() ?? false)
+            {
+                string filePath = openFileDialog.FileName;
+                await ReadLineSeparatedJsonFileAsync(filePath);
+            }
+        }
+
+        private async Task ReadLineSeparatedJsonFileAsync(string filePath)
+        {
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                string jsonContent = File.ReadAllText(filePath);
+                bool success = await LoadLineSeparatedJsonAsync(jsonContent);
+
+                if (success)
+                {
+                    LoadType = JsonLoadType.File;
+                    JsonFileName = filePath;
+                }
+            }
+        }
+
+        private async Task<bool> LoadLineSeparatedJsonAsync(string jsonContent)
+        {
+            int faultedLines = 0;
+
+            if (string.IsNullOrWhiteSpace(jsonContent))
+            {
+                return false;
+            }
+
+            var jsonLines = jsonContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            var deserializedProfilers = new List<MiniProfiler>();
+            foreach (string jsonLine in jsonLines)
+            {
+                var miniProfiler = await Task.Run(() => JsonHelper.DeserializeAsMiniProfiler(jsonLine));
+
+                if (miniProfiler != null)
+                {
+                    deserializedProfilers.Add(miniProfiler);
+                }
+                else
+                {
+                    faultedLines++;
+                }
+            }
+
+            if (faultedLines == jsonLines.Length)
+            {
+                MessageBox.Show(Application.Current.MainWindow, "Given JSON content is not valid.", "Line Separated JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (faultedLines > 0)
+            {
+                MessageBox.Show(Application.Current.MainWindow, "Some JSON lines are not valid.", "Line Separated JSON Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            HideAllDetailsView();
+            await LoadContentAsync(deserializedProfilers);
+
+            return true;
+        }
+
         private async Task GetJsonTextAsync()
         {
             using (var multilineTextBox = new MultilineTextBoxViewModel("Load JSON Text"))
@@ -216,6 +296,12 @@ namespace MiniAnalyzer
         {
             IsLoaded = false;
             await ResultTree.LoadTreeAsync(miniProfiler);
+        }
+
+        private async Task LoadContentAsync(IEnumerable<MiniProfiler> miniProfilers)
+        {
+            IsLoaded = false;
+            await ResultTree.LoadTreeAsync(miniProfilers);
         }
 
         private void HideAllDetailsView()

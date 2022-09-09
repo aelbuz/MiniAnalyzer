@@ -2,6 +2,7 @@
 {
     public static class FileConstants
     {
-        public const string JsonExtension = ".json";
+        public const string JsonFileExtension = ".json";
+        public const string TextFileExtension = ".txt";
     }
 }

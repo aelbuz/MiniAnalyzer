@@ -23,7 +23,7 @@ namespace MiniAnalyzer
                 if (e.Data.GetData(DataFormats.FileDrop) is string[] files && files.Length == 1)
                 {
                     string fileExtension = Path.GetExtension(files[0]);
-                    if (fileExtension.ToLowerInvariant() != FileConstants.JsonExtension)
+                    if (fileExtension.ToLowerInvariant() != FileConstants.JsonFileExtension)
                     {
                         dropEnabled = false;
                     }
@@ -52,7 +52,7 @@ namespace MiniAnalyzer
                 string filePath = files[0];
                 if (DataContext is MainWindowViewModel mainWindowVm)
                 {
-                    await mainWindowVm.LoadJsonFileAsync(filePath);
+                    await mainWindowVm.ReadJsonFileAsync(filePath);
                 }
             }
         }

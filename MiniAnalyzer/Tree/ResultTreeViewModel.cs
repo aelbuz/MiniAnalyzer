@@ -30,6 +30,24 @@ namespace MiniAnalyzer.Tree
             }
         }
 
+        public async Task LoadTreeAsync(IEnumerable<MiniProfiler> profilerResults)
+        {
+            if (Items.Count > 0)
+            {
+                Items.Clear();
+            }
+
+            foreach (var profilerResult in profilerResults)
+            {
+                var items = await CreateItemsAsync(profilerResult);
+
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
+            }
+        }
+
         private async Task<IEnumerable<TreeItemViewModelBase>> CreateItemsAsync(MiniProfiler profilerResult)
         {
             var items = new List<TreeItemViewModelBase>();
