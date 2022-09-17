@@ -6,6 +6,7 @@ using MiniAnalyzer.Tree.TreeItem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -233,37 +234,21 @@ namespace MiniAnalyzer
 
         private async Task<bool> LoadLineSeparatedJsonAsync(string jsonContent)
         {
-            int faultedLines = 0;
-
             if (string.IsNullOrWhiteSpace(jsonContent))
             {
                 return false;
             }
 
             var jsonLines = jsonContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            var deserializedProfilers = await Task.Run(() => JsonHelper.DeserializeAsMiniProfiler(jsonLines));
 
-            var deserializedProfilers = new List<MiniProfiler>();
-            foreach (string jsonLine in jsonLines)
-            {
-                var miniProfiler = await Task.Run(() => JsonHelper.DeserializeAsMiniProfiler(jsonLine));
-
-                if (miniProfiler != null)
-                {
-                    deserializedProfilers.Add(miniProfiler);
-                }
-                else
-                {
-                    faultedLines++;
-                }
-            }
-
-            if (faultedLines == jsonLines.Length)
+            if (deserializedProfilers == null)
             {
                 MessageBox.Show(Application.Current.MainWindow, "Given JSON content is not valid.", "Line Separated JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
-            if (faultedLines > 0)
+            if (deserializedProfilers.Count() != jsonLines.Length)
             {
                 MessageBox.Show(Application.Current.MainWindow, "Some JSON lines are not valid.", "Line Separated JSON Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
