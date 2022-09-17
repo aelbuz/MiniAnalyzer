@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Utilities
 {
-    public class JsonHelper
+    public class JsonDeserializer
     {
         public static MiniProfiler? DeserializeAsMiniProfiler(string jsonContent)
         {
@@ -18,8 +18,13 @@ namespace Utilities
             }
         }
 
-        public static IEnumerable<MiniProfiler>? DeserializeAsMiniProfiler(string[] jsonContents)
+        public static IEnumerable<MiniProfiler>? DeserializeAsMiniProfiler(string[]? jsonContents)
         {
+            if (jsonContents == null)
+            {
+                return null;
+            }
+
             var miniProfilers = new List<MiniProfiler>();
 
             foreach (var jsonContent in jsonContents)

@@ -4,7 +4,6 @@ using MiniAnalyzer.Tree.Detail;
 using MiniAnalyzer.Tree.TreeItem;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -159,7 +158,7 @@ namespace MiniAnalyzer
         {
             if (!string.IsNullOrWhiteSpace(filePath))
             {
-                string jsonContent = File.ReadAllText(filePath);
+                string? jsonContent = JsonFileReader.ReadJsonFile(filePath);
                 bool success = await LoadJsonAsync(jsonContent);
 
                 if (success)
@@ -176,7 +175,7 @@ namespace MiniAnalyzer
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                miniProfiler = await Task.Run(() => JsonHelper.DeserializeAsMiniProfiler(jsonContent));
+                miniProfiler = await Task.Run(() => JsonDeserializer.DeserializeAsMiniProfiler(jsonContent));
             }
 
             if (miniProfiler != null)
@@ -187,7 +186,7 @@ namespace MiniAnalyzer
             }
             else
             {
-                MessageBox.Show(Application.Current.MainWindow, "Given JSON content is not valid.", "JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxHelper.ShowMessageBox(MessageBoxMessage.InvalidJsonContent);
                 return false;
             }
         }
@@ -209,8 +208,8 @@ namespace MiniAnalyzer
         {
             if (!string.IsNullOrWhiteSpace(filePath))
             {
-                string jsonContent = File.ReadAllText(filePath);
-                bool success = await LoadLineSeparatedJsonAsync(jsonContent);
+                var jsonLines = JsonFileReader.ReadLineSeparatedJsonFile(filePath);
+                bool success = await LoadLineSeparatedJsonAsync(jsonLines);
 
                 if (success)
                 {
@@ -220,29 +219,22 @@ namespace MiniAnalyzer
             }
         }
 
-        private async Task<bool> LoadLineSeparatedJsonAsync(string jsonContent)
+        private async Task<bool> LoadLineSeparatedJsonAsync(string[]? jsonLines)
         {
-            if (string.IsNullOrWhiteSpace(jsonContent))
-            {
-                return false;
-            }
-
-            var jsonLines = jsonContent.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            var deserializedProfilers = await Task.Run(() => JsonHelper.DeserializeAsMiniProfiler(jsonLines));
-
+            var deserializedProfilers = await Task.Run(() => JsonDeserializer.DeserializeAsMiniProfiler(jsonLines));
             if (deserializedProfilers == null)
             {
-                MessageBox.Show(Application.Current.MainWindow, "Given JSON content is not valid.", "Line Separated JSON Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxHelper.ShowMessageBox(MessageBoxMessage.InvalidLineSeparatedJsonContent);
                 return false;
-            }
-
-            if (deserializedProfilers.Count() != jsonLines.Length)
-            {
-                MessageBox.Show(Application.Current.MainWindow, "Some JSON lines are not valid.", "Line Separated JSON Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             HideAllDetailsView();
             await LoadContentAsync(deserializedProfilers);
+
+            if (deserializedProfilers.Count() != jsonLines.Length)
+            {
+                MessageBoxHelper.ShowMessageBox(MessageBoxMessage.InvalidJsonLines);
+            }
 
             return true;
         }
