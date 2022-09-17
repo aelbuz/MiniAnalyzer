@@ -171,13 +171,7 @@ namespace MiniAnalyzer
 
         private async Task<bool> LoadJsonAsync(string? jsonContent)
         {
-            MiniProfiler? miniProfiler = null;
-
-            if (!string.IsNullOrWhiteSpace(jsonContent))
-            {
-                miniProfiler = await Task.Run(() => JsonDeserializer.DeserializeAsMiniProfiler(jsonContent));
-            }
-
+            var miniProfiler = await Task.Run(() => JsonDeserializer.DeserializeAsMiniProfiler(jsonContent));
             if (miniProfiler != null)
             {
                 HideAllDetailsView();

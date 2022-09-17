@@ -5,8 +5,13 @@ namespace Utilities
 {
     public class JsonDeserializer
     {
-        public static MiniProfiler? DeserializeAsMiniProfiler(string jsonContent)
+        public static MiniProfiler? DeserializeAsMiniProfiler(string? jsonContent)
         {
+            if (string.IsNullOrWhiteSpace(jsonContent))
+            {
+                return null;
+            }
+
             try
             {
                 var miniProfiler = JsonSerializer.Deserialize<MiniProfiler>(jsonContent);
@@ -39,8 +44,13 @@ namespace Utilities
             return miniProfilers.Count > 0 ? miniProfilers : null;
         }
 
-        public static Timing? DeserializeAsTiming(string jsonContent)
+        public static Timing? DeserializeAsTiming(string? jsonContent)
         {
+            if (string.IsNullOrWhiteSpace(jsonContent))
+            {
+                return null;
+            }
+
             try
             {
                 var timing = JsonSerializer.Deserialize<Timing>(jsonContent);
