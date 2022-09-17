@@ -1,5 +1,4 @@
 ﻿using Common.Types;
-using Microsoft.Win32;
 using MiniAnalyzer.Tree;
 using MiniAnalyzer.Tree.Detail;
 using MiniAnalyzer.Tree.TreeItem;
@@ -146,18 +145,12 @@ namespace MiniAnalyzer
 
         private async Task OpenJsonFileAsync()
         {
-            var openFileDialog = new OpenFileDialog()
-            {
-                CheckFileExists = true,
-                CheckPathExists = true,
-                Filter = string.Format("JSON File|*{0}", FileConstants.JsonFileExtension),
-                Multiselect = false,
-                Title = "Load JSON File"
-            };
+            string openFileDialogFilter = string.Format("JSON File|*{0}", FileConstants.JsonFileExtension);
+            string openFileDialogTitle = "Load JSON File";
+            string filePath = string.Empty;
 
-            if (openFileDialog.ShowDialog() ?? false)
+            if (FileDialogHelper.ShowOpenFileDialog(openFileDialogFilter, openFileDialogTitle, ref filePath))
             {
-                string filePath = openFileDialog.FileName;
                 await ReadJsonFileAsync(filePath);
             }
         }
@@ -201,18 +194,13 @@ namespace MiniAnalyzer
 
         private async Task GetLineSeparatedJsonTextAsync()
         {
-            var openFileDialog = new OpenFileDialog()
-            {
-                CheckFileExists = true,
-                CheckPathExists = true,
-                Filter = string.Format("Line Separated JSON File|*{0}|Text File|*{1}", FileConstants.JsonFileExtension, FileConstants.TextFileExtension),
-                Multiselect = false,
-                Title = "Load Line Separated JSON File"
-            };
+            string openFileDialogFilter = string.Format("Line Separated JSON File|*{0}|Text File|*{1}",
+                                                        FileConstants.JsonFileExtension, FileConstants.TextFileExtension);
+            string openFileDialogTitle = "Load Line Separated JSON File";
+            string filePath = string.Empty;
 
-            if (openFileDialog.ShowDialog() ?? false)
+            if (FileDialogHelper.ShowOpenFileDialog(openFileDialogFilter, openFileDialogTitle, ref filePath))
             {
-                string filePath = openFileDialog.FileName;
                 await ReadLineSeparatedJsonFileAsync(filePath);
             }
         }
