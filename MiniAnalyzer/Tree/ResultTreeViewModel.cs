@@ -17,34 +17,36 @@ namespace MiniAnalyzer.Tree
 
         public async Task LoadTreeAsync(MiniProfiler profilerResult)
         {
-            if (Items.Count > 0)
-            {
-                Items.Clear();
-            }
+            ClearItems();
 
-            var items = await CreateItemsAsync(profilerResult);
-
-            foreach (var item in items)
-            {
-                Items.Add(item);
-            }
+            await AddItemsAsync(profilerResult);
         }
 
         public async Task LoadTreeAsync(IEnumerable<MiniProfiler> profilerResults)
+        {
+            ClearItems();
+
+            foreach (var profilerResult in profilerResults)
+            {
+                await AddItemsAsync(profilerResult);
+            }
+        }
+
+        private void ClearItems()
         {
             if (Items.Count > 0)
             {
                 Items.Clear();
             }
+        }
 
-            foreach (var profilerResult in profilerResults)
+        private async Task AddItemsAsync(MiniProfiler profilerResult)
+        {
+            var items = await CreateItemsAsync(profilerResult);
+
+            foreach (var item in items)
             {
-                var items = await CreateItemsAsync(profilerResult);
-
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
+                Items.Add(item);
             }
         }
 
