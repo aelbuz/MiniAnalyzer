@@ -15,9 +15,12 @@ namespace MiniAnalyzer.Tree
             Items = new ObservableCollection<TreeItemViewModelBase>();
         }
 
-        public async Task LoadTreeAsync(MiniProfiler profilerResult)
+        public async Task LoadTreeAsync(MiniProfiler profilerResult, JsonLoadType loadType)
         {
-            ClearItems();
+            if (loadType == JsonLoadType.Load)
+            {
+                ClearItems(); 
+            }
 
             await AddItemsAsync(profilerResult);
         }

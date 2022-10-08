@@ -29,13 +29,16 @@
                 <MenuItem Header="Load">
                     <MenuItem Header="JSON File" Command="{Binding LoadJsonFileCommand}"/>
                     <MenuItem Header="JSON File (Line Separated)" Command="{Binding LoadLineSeparatedJsonFileCommand}"/>
-                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}"/>
+                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}" CommandParameter="{x:Static local:JsonLoadType.Load}"/>
+                </MenuItem>
+                <MenuItem Header="Append">
+                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}" CommandParameter="{x:Static local:JsonLoadType.Append}"/>
                 </MenuItem>
             </Menu>
             <TextBlock Text="{Binding JsonFileName}"
                        Grid.Column="1"
                        Margin="0,0,5,0"
-                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonLoadType.File}}"/>
+                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonType.File}}"/>
         </Grid>
 
         <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Default}}">
@@ -44,7 +47,11 @@
                 <Button Command="{Binding LoadLineSeparatedJsonFileCommand}" Width="108" Height="36" Margin="10,0">
                     <TextBlock Text="Load JSON File (Line Separated)" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
-                <Button Content="Load JSON Text" Command="{Binding LoadJsonTextCommand}" Width="108" Height="36"/>
+                <Button Content="Load JSON Text"
+                        Command="{Binding LoadJsonTextCommand}"
+                        CommandParameter="{x:Static local:JsonLoadType.Load}"
+                        Width="108"
+                        Height="36"/>
             </StackPanel>
         </Grid>
 

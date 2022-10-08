@@ -20,7 +20,7 @@ namespace MiniAnalyzer
             IsLoaded = true;
             LoadJsonFileCommand = new RelayCommand(async () => await OpenJsonFileAsync());
             LoadLineSeparatedJsonFileCommand = new RelayCommand(async () => await GetLineSeparatedJsonTextAsync());
-            LoadJsonTextCommand = new RelayCommand(async () => await GetJsonTextAsync());
+            LoadJsonTextCommand = new RelayCommand<JsonLoadType>(async (loadType) => await GetJsonTextAsync(loadType));
 
             ResultTree = new ResultTreeViewModel();
             ResultTree.OnSelectedItemChanged += ResultTree_OnSelectedItemChanged;
@@ -98,9 +98,9 @@ namespace MiniAnalyzer
 
         #region LoadType Property
 
-        private JsonLoadType? loadType;
+        private JsonType? loadType;
 
-        public JsonLoadType? LoadType
+        public JsonType? LoadType
         {
             get => loadType;
             private set
@@ -159,23 +159,23 @@ namespace MiniAnalyzer
             if (!string.IsNullOrWhiteSpace(filePath))
             {
                 string? jsonContent = JsonFileReader.ReadJsonFile(filePath);
-                bool success = await LoadJsonAsync(jsonContent);
+                bool success = await LoadJsonAsync(jsonContent, JsonLoadType.Load);
 
                 if (success)
                 {
-                    LoadType = JsonLoadType.File;
+                    LoadType = JsonType.File;
                     JsonFileName = filePath;
                 }
             }
         }
 
-        private async Task<bool> LoadJsonAsync(string? jsonContent)
+        private async Task<bool> LoadJsonAsync(string? jsonContent, JsonLoadType loadType)
         {
             var miniProfiler = await Task.Run(() => JsonDeserializer.DeserializeAsMiniProfiler(jsonContent));
             if (miniProfiler != null)
             {
                 HideAllDetailsView();
-                await LoadContentAsync(miniProfiler);
+                await LoadContentAsync(miniProfiler, loadType);
                 return true;
             }
             else
@@ -207,7 +207,7 @@ namespace MiniAnalyzer
 
                 if (success)
                 {
-                    LoadType = JsonLoadType.File;
+                    LoadType = JsonType.File;
                     JsonFileName = filePath;
                 }
             }
@@ -233,28 +233,30 @@ namespace MiniAnalyzer
             return true;
         }
 
-        private async Task GetJsonTextAsync()
+        private async Task GetJsonTextAsync(JsonLoadType loadType)
         {
-            using (var multilineTextBox = new MultilineTextBoxViewModel("Load JSON Text"))
+            string title = loadType == JsonLoadType.Load ? "Load JSON Text" : "Append JSON Text";
+
+            using (var multilineTextBox = new MultilineTextBoxViewModel(title))
             {
                 if (!multilineTextBox.IsCanceled)
                 {
                     string? jsonContent = multilineTextBox.Text;
-                    bool success = await LoadJsonAsync(jsonContent);
+                    bool success = await LoadJsonAsync(jsonContent, loadType);
 
                     if (success)
                     {
-                        LoadType = JsonLoadType.Text;
+                        LoadType = JsonType.Text;
                         JsonFileName = string.Empty;
                     }
                 }
             }
         }
 
-        private async Task LoadContentAsync(MiniProfiler miniProfiler)
+        private async Task LoadContentAsync(MiniProfiler miniProfiler, JsonLoadType loadType)
         {
             IsLoaded = false;
-            await ResultTree.LoadTreeAsync(miniProfiler);
+            await ResultTree.LoadTreeAsync(miniProfiler, loadType);
         }
 
         private async Task LoadContentAsync(IEnumerable<MiniProfiler> miniProfilers)

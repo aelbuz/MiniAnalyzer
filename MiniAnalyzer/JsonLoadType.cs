@@ -2,7 +2,7 @@
 {
     public enum JsonLoadType
     {
-        File,
-        Text
+        Load,
+        Append
     }
 }
