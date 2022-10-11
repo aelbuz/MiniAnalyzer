@@ -38,7 +38,7 @@
             <TextBlock Text="{Binding JsonFileName}"
                        Grid.Column="1"
                        Margin="0,0,5,0"
-                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonType.File}}"/>
+                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonContentType.File}}"/>
         </Grid>
 
         <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Default}}">

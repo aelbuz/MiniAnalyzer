@@ -98,9 +98,9 @@ namespace MiniAnalyzer
 
         #region LoadType Property
 
-        private JsonType? loadType;
+        private JsonContentType? loadType;
 
-        public JsonType? LoadType
+        public JsonContentType? LoadType
         {
             get => loadType;
             private set
@@ -163,7 +163,7 @@ namespace MiniAnalyzer
 
                 if (success)
                 {
-                    LoadType = JsonType.File;
+                    LoadType = JsonContentType.File;
                     JsonFileName = filePath;
                 }
             }
@@ -207,7 +207,7 @@ namespace MiniAnalyzer
 
                 if (success)
                 {
-                    LoadType = JsonType.File;
+                    LoadType = JsonContentType.File;
                     JsonFileName = filePath;
                 }
             }
@@ -246,7 +246,7 @@ namespace MiniAnalyzer
 
                     if (success)
                     {
-                        LoadType = JsonType.Text;
+                        LoadType = JsonContentType.Text;
                         JsonFileName = string.Empty;
                     }
                 }

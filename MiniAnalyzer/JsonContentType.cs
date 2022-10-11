@@ -1,6 +1,6 @@
 ﻿namespace MiniAnalyzer
 {
-    public enum JsonType
+    public enum JsonContentType
     {
         File,
         Text
