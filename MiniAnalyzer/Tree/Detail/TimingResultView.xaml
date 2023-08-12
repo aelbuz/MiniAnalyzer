@@ -32,9 +32,13 @@
             <Label Content="Start Milliseconds:" Grid.Column="0" Grid.Row="3"/>
             <TextBox Text="{Binding StartMilliseconds, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
 
-            <local:TimingDebugInfoView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" DataContext="{Binding TimingDebugInfo}" Visibility="{Binding Visibility}"/>
+            <local:TimingDebugInfoView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"
+                                       DataContext="{Binding TimingDebugInfo}"
+                                       Visibility="{Binding Visibility}"/>
 
-            <common:TimeChartView Content="{Binding TimeChart}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Bottom"/>
+            <common:TimeChartView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"
+                                  Content="{Binding TimeChart}"
+                                  VerticalAlignment="Bottom"/>
         </Grid>
     </ScrollViewer>
 </UserControl>

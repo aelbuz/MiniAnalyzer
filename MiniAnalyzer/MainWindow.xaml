@@ -28,20 +28,28 @@
             <Menu Grid.Column="0" Grid.ColumnSpan="2">
                 <MenuItem Header="Load">
                     <MenuItem Header="JSON File" Command="{Binding LoadJsonFileCommand}"/>
-                    <MenuItem Header="JSON File (Line Separated)" Command="{Binding LoadLineSeparatedJsonFileCommand}"/>
-                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}" CommandParameter="{x:Static local:JsonLoadType.Load}"/>
+                    <MenuItem Header="JSON File (Line Separated)"
+                              Command="{Binding LoadLineSeparatedJsonFileCommand}"/>
+                    <MenuItem Header="JSON Text"
+                              Command="{Binding LoadJsonTextCommand}"
+                              CommandParameter="{x:Static local:JsonLoadType.Load}"/>
                 </MenuItem>
                 <MenuItem Header="Append">
-                    <MenuItem Header="JSON Text" Command="{Binding LoadJsonTextCommand}" CommandParameter="{x:Static local:JsonLoadType.Append}"/>
+                    <MenuItem Header="JSON Text"
+                              Command="{Binding LoadJsonTextCommand}"
+                              CommandParameter="{x:Static local:JsonLoadType.Append}"/>
                 </MenuItem>
             </Menu>
             <TextBlock Text="{Binding JsonFileName}"
                        Grid.Column="1"
                        Margin="0,0,5,0"
-                       Visibility="{Binding LoadType, Converter={x:Static conv:EnumToVisibilityConverter.Default}, ConverterParameter={x:Static local:JsonContentType.File}}"/>
+                       Visibility="{Binding LoadType,
+                                            Converter={x:Static conv:EnumToVisibilityConverter.Default},
+                                            ConverterParameter={x:Static local:JsonContentType.File}}"/>
         </Grid>
 
-        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Default}}">
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Default}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Load JSON File" Command="{Binding LoadJsonFileCommand}" Width="108" Height="36"/>
                 <Button Command="{Binding LoadLineSeparatedJsonFileCommand}" Width="108" Height="36" Margin="10,0">
@@ -55,7 +63,8 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1" Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.Inverted}}">
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsLoaded, Converter={x:Static conv:BooleanToVisibilityConverter.DefaultInverted}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="2*" />

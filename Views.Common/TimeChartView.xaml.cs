@@ -8,15 +8,23 @@ using System.Windows.Controls;
 namespace Views.Common
 {
     /// <summary>
-    /// Interaction logic for TimeChartView.xaml
+    /// Defines a time chart that shows the given time values.
     /// </summary>
     public partial class TimeChartView : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeChartView"/>.
+        /// </summary>
         public TimeChartView()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Updates the chart's times with given timing model asynchronously.
+        /// </summary>
+        /// <param name="timing">Timing model.</param>
+        /// <returns>A task.</returns>
         public async Task UpdateTimesAsync(Timing timing)
         {
             await Application.Current.Dispatcher.BeginInvoke(() =>
@@ -46,13 +54,15 @@ namespace Views.Common
                 {
                     if (timing.DurationMilliseconds.HasValue && child.DurationMilliseconds.HasValue)
                     {
+                        double value = 100.0 / (double)timing.DurationMilliseconds.Value * (double)child.DurationMilliseconds.Value;
+
                         items.Add(new TimeChartItem
                         {
                             Background = ColorHelper.GetNextColor(),
                             DurationMilliseconds = child.DurationMilliseconds.Value,
                             Id = child.Id,
                             Name = child.Name,
-                            Value = (double)(100.0 / (double)timing.DurationMilliseconds.Value * (double)child.DurationMilliseconds.Value),
+                            Value = value,
                         });
                     }
                 }
@@ -66,13 +76,15 @@ namespace Views.Common
                     {
                         if (timing.DurationMilliseconds.HasValue && customTiming.DurationMilliseconds.HasValue)
                         {
+                            double value = 100.0 / (double)timing.DurationMilliseconds.Value * (double)customTiming.DurationMilliseconds.Value;
+
                             items.Add(new TimeChartItem
                             {
                                 Background = ColorHelper.GetNextColor(),
                                 DurationMilliseconds = customTiming.DurationMilliseconds.Value,
                                 Id = customTiming.Id,
                                 Name = customTimings.Key,
-                                Value = (double)(100.0 / (double)timing.DurationMilliseconds.Value * (double)customTiming.DurationMilliseconds.Value),
+                                Value = value,
                             });
                         }
                     }

@@ -3,12 +3,13 @@
 namespace MiniAnalyzer
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
         private MainWindowViewModel? mainWindowVm;
 
+        /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
             mainWindowVm = new MainWindowViewModel();
@@ -21,6 +22,7 @@ namespace MiniAnalyzer
             base.OnStartup(e);
         }
 
+        /// <inheritdoc/>
         protected override void OnExit(ExitEventArgs e)
         {
             mainWindowVm?.Dispose();

@@ -8,23 +8,72 @@ using Views.Common;
 
 namespace MiniAnalyzer.Tree
 {
+    /// <summary>
+    /// Defines functionalities of the result tree view-model.
+    /// </summary>
     public class ResultTreeViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResultTreeViewModel"/> class.
+        /// </summary>
         public ResultTreeViewModel()
         {
             Items = new ObservableCollection<TreeItemViewModelBase>();
         }
 
+        /// <summary>
+        /// Gets the items of the tree.
+        /// </summary>
+        public ObservableCollection<TreeItemViewModelBase> Items { get; private set; }
+
+        #region SelectedItem Property
+
+        private TreeItemViewModelBase? selectedItem;
+
+        /// <summary>
+        /// Gets or sets the selected item.
+        /// </summary>
+        public TreeItemViewModelBase? SelectedItem
+        {
+            get => selectedItem;
+            internal set
+            {
+                if (value != selectedItem)
+                {
+                    selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Occurs when the selected item has changed on the tree.
+        /// </summary>
+        public event EventHandler<TreeItemViewModelBase>? OnSelectedItemChanged;
+
+        /// <summary>
+        /// Loads the tree with given profiler result and JSON load type asynchronously.
+        /// </summary>
+        /// <param name="profilerResult">Profiler result.</param>
+        /// <param name="loadType">JSON load type.</param>
+        /// <returns>A task.</returns>
         public async Task LoadTreeAsync(MiniProfiler profilerResult, JsonLoadType loadType)
         {
             if (loadType == JsonLoadType.Load)
             {
-                ClearItems(); 
+                ClearItems();
             }
 
             await AddItemsAsync(profilerResult);
         }
 
+        /// <summary>
+        /// Loads the tree with given a list of profiler result asynchronously.
+        /// </summary>
+        /// <param name="profilerResults"></param>
+        /// <returns>A task.</returns>
         public async Task LoadTreeAsync(IEnumerable<MiniProfiler> profilerResults)
         {
             ClearItems();
@@ -53,7 +102,7 @@ namespace MiniAnalyzer.Tree
             }
         }
 
-        private async Task<IEnumerable<TreeItemViewModelBase>> CreateItemsAsync(MiniProfiler profilerResult)
+        private static async Task<IEnumerable<TreeItemViewModelBase>> CreateItemsAsync(MiniProfiler profilerResult)
         {
             var items = new List<TreeItemViewModelBase>();
 
@@ -65,29 +114,7 @@ namespace MiniAnalyzer.Tree
             return items;
         }
 
-        public ObservableCollection<TreeItemViewModelBase> Items { get; private set; }
-
-        #region SelectedItem Property
-
-        private TreeItemViewModelBase? selectedItem;
-
-        public TreeItemViewModelBase? SelectedItem
-        {
-            get => selectedItem;
-            internal set
-            {
-                if (value != selectedItem)
-                {
-                    selectedItem = value;
-                    OnPropertyChanged(nameof(SelectedItem));
-                }
-            }
-        }
-
-        #endregion
-
-        public event EventHandler<TreeItemViewModelBase>? OnSelectedItemChanged;
-
+        /// <inheritdoc/>
         public override void OnPropertyChanged(string propertyName)
         {
             if (propertyName == nameof(SelectedItem) && SelectedItem != null)

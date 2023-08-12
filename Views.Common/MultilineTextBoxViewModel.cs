@@ -3,10 +3,17 @@ using System.Windows.Input;
 
 namespace Views.Common
 {
+    /// <summary>
+    /// Defines functionalities of a window and view-model that contains a textbox with multiline feature.
+    /// </summary>
     public class MultilineTextBoxViewModel : IDisposable
     {
         private readonly MultilineTextBoxWindow window;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultilineTextBoxViewModel"/> class.
+        /// </summary>
+        /// <param name="title">Title of the textbox window.</param>
         public MultilineTextBoxViewModel(string title)
         {
             IsCanceled = true;
@@ -22,9 +29,25 @@ namespace Views.Common
             window.ShowDialog();
         }
 
+        /// <summary>
+        /// Gets the OK button command.
+        /// </summary>
         public ICommand OkButtonCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the cancel button command.
+        /// </summary>
         public ICommand CancelButtonCommand { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the text of the multiline textbox.
+        /// </summary>
+        public string? Text { get; set; }
+
+        /// <summary>
+        /// Gets the value indicating whether the user clicked the cancel button on the window.
+        /// </summary>
+        public bool IsCanceled { get; private set; }
 
         private void Ok()
         {
@@ -36,10 +59,6 @@ namespace Views.Common
         {
             window.Close();
         }
-
-        public string? Text { get; set; }
-
-        public bool IsCanceled { get; private set; }
 
         #region Dispose Methods
 
@@ -63,7 +82,10 @@ namespace Views.Common
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="nongc"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="nongc">
+        /// <c>true</c> to release both managed and unmanaged resources;
+        /// <c>false</c> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool nongc)
         {
             if (!IsDisposed && nongc)

@@ -5,13 +5,25 @@ using Views.Common;
 
 namespace MiniAnalyzer.Tree.Detail
 {
+    /// <summary>
+    /// Defines functionalities of the custom timing result view-model.
+    /// </summary>
     public class CustomTimingResultViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomTimingResultViewModel"/> class.
+        /// </summary>
         public CustomTimingResultViewModel()
         {
             Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Loads the content with given custom timing key and model asynchronously.
+        /// </summary>
+        /// <param name="customTimingKey">Custom timing key.</param>
+        /// <param name="customTiming">Custom timing model.</param>
+        /// <returns>A task.</returns>
         public async Task LoadContentAsync(string customTimingKey, CustomTiming customTiming)
         {
             await LoadContentCoreAsync(customTimingKey, customTiming);
@@ -39,6 +51,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? id;
 
+        /// <summary>
+        /// Gets the unique identifier of this custom timing (MiniProfiler property).
+        /// </summary>
         public string? Id
         {
             get => id;
@@ -58,6 +73,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? customTimingKey;
 
+        /// <summary>
+        /// Gets the custom timing key/type (MiniProfiler property).
+        /// </summary>
         public string? CustomTimingKey
         {
             get => customTimingKey;
@@ -77,6 +95,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? executeType;
 
+        /// <summary>
+        /// Gets the short name describing what kind of custom timing this is (MiniProfiler property).
+        /// </summary>
         public string? ExecuteType
         {
             get => executeType;
@@ -96,6 +117,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private decimal? durationMilliseconds;
 
+        /// <summary>
+        /// Gets the value of how long this custom command statement took to execute (MiniProfiler property).
+        /// </summary>
         public decimal? DurationMilliseconds
         {
             get => durationMilliseconds;
@@ -115,6 +139,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private decimal startMilliseconds;
 
+        /// <summary>
+        /// Gets the offset from main profiler start that this custom command began (MiniProfiler property).
+        /// </summary>
         public decimal StartMilliseconds
         {
             get => startMilliseconds;
@@ -134,6 +161,10 @@ namespace MiniAnalyzer.Tree.Detail
 
         private decimal? firstFetchDurationMilliseconds;
 
+        /// <summary>
+        /// Gets the value of how long this timing took to come back initially from the remote server,
+        /// before all data is fetched and command is completed (MiniProfiler property).
+        /// </summary>
         public decimal? FirstFetchDurationMilliseconds
         {
             get => firstFetchDurationMilliseconds;
@@ -153,6 +184,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? commandString;
 
+        /// <summary>
+        /// Gets the command that was executed (MiniProfiler property).
+        /// </summary>
         public string? CommandString
         {
             get => commandString;
@@ -172,6 +206,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? stackTraceSnippet;
 
+        /// <summary>
+        /// Gets the value where in the calling code that this custom timing was executed (MiniProfiler property).
+        /// </summary>
         public string? StackTraceSnippet
         {
             get => stackTraceSnippet;
@@ -191,6 +228,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private bool errored;
 
+        /// <summary>
+        /// Gets the value indicating whether this operation errored (MiniProfiler property).
+        /// </summary>
         public bool Errored
         {
             get => errored;
@@ -210,6 +250,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private Visibility visibility;
 
+        /// <summary>
+        /// Gets or sets the visibility state of this view-model.
+        /// </summary>
         public Visibility Visibility
         {
             get => visibility;

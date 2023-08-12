@@ -3,8 +3,15 @@ using System.Collections.Generic;
 
 namespace MiniAnalyzer.Tree.TreeItem
 {
+    /// <summary>
+    /// Defines functionalities of a parent timing item view-model.
+    /// </summary>
     public class ParentTimingItemViewModel : TreeItemViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParentTimingItemViewModel"/> class.
+        /// </summary>
+        /// <param name="model">Timing model.</param>
         public ParentTimingItemViewModel(Timing model)
             : base(model.Name, model.DurationMilliseconds)
         {
@@ -41,8 +48,14 @@ namespace MiniAnalyzer.Tree.TreeItem
             Children = children;
         }
 
-        public IEnumerable<TreeItemViewModelBase> Children { get; set; }
+        /// <summary>
+        /// Gets the children tree items of this view-model.
+        /// </summary>
+        public IEnumerable<TreeItemViewModelBase> Children { get; private set; }
 
+        /// <summary>
+        /// Gets the model of this item view-model.
+        /// </summary>
         internal Timing Model { get; private set; }
     }
 }

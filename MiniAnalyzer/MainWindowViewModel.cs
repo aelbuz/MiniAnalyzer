@@ -13,8 +13,14 @@ using Views.Common;
 
 namespace MiniAnalyzer
 {
+    /// <summary>
+    /// Defines functionalities of the application's main window view-model.
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase, IDisposable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
+        /// </summary>
         public MainWindowViewModel()
         {
             IsLoaded = true;
@@ -28,6 +34,127 @@ namespace MiniAnalyzer
             RootResult = new RootResultViewModel();
             TimingResult = new TimingResultViewModel();
             CustomTimingResult = new CustomTimingResultViewModel();
+        }
+
+        /// <summary>
+        /// Gets the load JSON file command.
+        /// </summary>
+        public ICommand LoadJsonFileCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the load line separated JSON file command.
+        /// </summary>
+        public ICommand LoadLineSeparatedJsonFileCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the load JSON text command.
+        /// </summary>
+        public ICommand LoadJsonTextCommand { get; private set; }
+
+        #region IsLoaded Property
+
+        private bool isLoaded;
+
+        /// <summary>
+        /// Gets the value indicating whether any JSON content has loaded.
+        /// </summary>
+        public bool IsLoaded
+        {
+            get => isLoaded;
+            private set
+            {
+                if (isLoaded != value)
+                {
+                    isLoaded = value;
+                    OnPropertyChanged(nameof(IsLoaded));
+                }
+            }
+        }
+
+        #endregion
+
+        #region LoadType Property
+
+        private JsonContentType? loadType;
+
+        /// <summary>
+        /// Gets the loaded JSON content type.
+        /// </summary>
+        public JsonContentType? LoadType
+        {
+            get => loadType;
+            private set
+            {
+                if (value != loadType)
+                {
+                    loadType = value;
+                    OnPropertyChanged(nameof(LoadType));
+                }
+            }
+        }
+
+        #endregion
+
+        #region JsonFileName Property
+
+        private string? jsonFileName;
+
+        /// <summary>
+        /// Gets the JSON file name if the loaded JSON content type is <see cref="JsonContentType.File"/>.
+        /// </summary>
+        public string? JsonFileName
+        {
+            get => jsonFileName;
+            private set
+            {
+                if (value != jsonFileName)
+                {
+                    jsonFileName = value;
+                    OnPropertyChanged(nameof(JsonFileName));
+                }
+            }
+        }
+
+        #endregion 
+
+        /// <summary>
+        /// Gets the result tree view-model.
+        /// </summary>
+        public ResultTreeViewModel ResultTree { get; private set; }
+
+        /// <summary>
+        /// Gets the root result view-model.
+        /// </summary>
+        public RootResultViewModel RootResult { get; private set; }
+
+        /// <summary>
+        /// Gets the timing result view-model.
+        /// </summary>
+        public TimingResultViewModel TimingResult { get; private set; }
+
+        /// <summary>
+        /// Gets the custom timing result view-model.
+        /// </summary>
+        public CustomTimingResultViewModel CustomTimingResult { get; private set; }
+
+        /// <summary>
+        /// Reads the JSON file from the given file path asynchronously.
+        /// </summary>
+        /// <param name="filePath">Path of the JSON file.</param>
+        /// <returns>A task.</returns>
+        internal async Task ReadJsonFileAsync(string filePath)
+        {
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                string? jsonContent = JsonFileReader.ReadJsonFile(filePath);
+                bool success = await LoadJsonAsync(jsonContent, JsonLoadType.Load);
+
+                if (success)
+                {
+                    LoadType = JsonContentType.File;
+                    JsonFileName = filePath;
+                }
+            }
         }
 
         private async void ResultTree_OnSelectedItemChanged(object? sender, TreeItemViewModelBase e)
@@ -71,77 +198,6 @@ namespace MiniAnalyzer
             }
         }
 
-        public ICommand LoadJsonFileCommand { get; private set; }
-
-        public ICommand LoadLineSeparatedJsonFileCommand { get; private set; }
-
-        public ICommand LoadJsonTextCommand { get; private set; }
-
-        #region IsLoaded Property
-
-        private bool isLoaded;
-
-        public bool IsLoaded
-        {
-            get => isLoaded;
-            private set
-            {
-                if (isLoaded != value)
-                {
-                    isLoaded = value;
-                    OnPropertyChanged(nameof(IsLoaded));
-                }
-            }
-        }
-
-        #endregion
-
-        #region LoadType Property
-
-        private JsonContentType? loadType;
-
-        public JsonContentType? LoadType
-        {
-            get => loadType;
-            private set
-            {
-                if (value != loadType)
-                {
-                    loadType = value;
-                    OnPropertyChanged(nameof(LoadType));
-                }
-            }
-        }
-
-        #endregion
-
-        #region JsonFileName Property
-
-        private string? jsonFileName;
-
-        public string? JsonFileName
-        {
-            get => jsonFileName;
-            private set
-            {
-                if (value != jsonFileName)
-                {
-                    jsonFileName = value;
-                    OnPropertyChanged(nameof(JsonFileName));
-                }
-            }
-        }
-
-        #endregion 
-
-        public ResultTreeViewModel ResultTree { get; private set; }
-
-        public RootResultViewModel RootResult { get; private set; }
-
-        public TimingResultViewModel TimingResult { get; private set; }
-
-        public CustomTimingResultViewModel CustomTimingResult { get; private set; }
-
         private async Task OpenJsonFileAsync()
         {
             string openFileDialogFilter = string.Format("JSON File|*{0}", FileConstants.JsonFileExtension);
@@ -151,21 +207,6 @@ namespace MiniAnalyzer
             if (FileDialogHelper.ShowOpenFileDialog(openFileDialogFilter, openFileDialogTitle, ref filePath))
             {
                 await ReadJsonFileAsync(filePath);
-            }
-        }
-
-        internal async Task ReadJsonFileAsync(string filePath)
-        {
-            if (!string.IsNullOrWhiteSpace(filePath))
-            {
-                string? jsonContent = JsonFileReader.ReadJsonFile(filePath);
-                bool success = await LoadJsonAsync(jsonContent, JsonLoadType.Load);
-
-                if (success)
-                {
-                    LoadType = JsonContentType.File;
-                    JsonFileName = filePath;
-                }
             }
         }
 
@@ -294,7 +335,10 @@ namespace MiniAnalyzer
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>
-        /// <param name="nongc"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="nongc">
+        /// <c>true</c> to release both managed and unmanaged resources;
+        /// <c>false</c> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool nongc)
         {
             if (!IsDisposed && nongc)

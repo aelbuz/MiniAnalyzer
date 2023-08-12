@@ -5,10 +5,13 @@ using System.Windows.Controls;
 namespace MiniAnalyzer.Tree
 {
     /// <summary>
-    /// Interaction logic for ResultTreeView.xaml
+    /// Interaction logic for ResultTreeView.xaml.
     /// </summary>
     public partial class ResultTreeView : TreeView
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResultTreeView"/> class.
+        /// </summary>
         public ResultTreeView()
         {
             InitializeComponent();

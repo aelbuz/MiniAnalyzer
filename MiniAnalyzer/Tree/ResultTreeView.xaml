@@ -13,7 +13,8 @@
         <HierarchicalDataTemplate DataType="{x:Type treeItem:RootItemViewModel}" ItemsSource="{Binding Children}">
             <TextBlock Text="{Binding Header}"/>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type treeItem:ParentTimingItemViewModel}" ItemsSource="{Binding Children}">
+        <HierarchicalDataTemplate DataType="{x:Type treeItem:ParentTimingItemViewModel}"
+                                  ItemsSource="{Binding Children}">
             <TextBlock Text="{Binding Header}"/>
         </HierarchicalDataTemplate>
         <DataTemplate DataType="{x:Type treeItem:CustomTimingItemViewModel}">

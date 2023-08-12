@@ -5,8 +5,14 @@ using Views.Common;
 
 namespace MiniAnalyzer.Tree.Detail
 {
+    /// <summary>
+    /// Defines functionalities of the timing result view-model.
+    /// </summary>
     public class TimingResultViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimingResultViewModel"/> class.
+        /// </summary>
         public TimingResultViewModel()
         {
             Visibility = Visibility.Collapsed;
@@ -15,31 +21,23 @@ namespace MiniAnalyzer.Tree.Detail
             TimeChart = new TimeChartView();
         }
 
+        /// <summary>
+        /// Loads the content with given timing model asynchronously.
+        /// </summary>
+        /// <param name="timing">Timing model.</param>
+        /// <returns>A task.</returns>
         public async Task LoadContentAsync(Timing timing)
         {
             await LoadContentCoreAsync(timing);
-        }
-
-        private async Task LoadContentCoreAsync(Timing timing)
-        {
-            await Task.Run(async () =>
-            {
-                Id = timing.Id.ToString();
-                Name = timing.Name;
-                DurationMilliseconds = timing.DurationMilliseconds;
-                StartMilliseconds = timing.StartMilliseconds;
-
-                await TimingDebugInfo.LoadContentAsync(timing.DebugInfo);
-                await TimeChart.UpdateTimesAsync(timing);
-
-                Visibility = Visibility.Visible;
-            });
         }
 
         #region Id Property
 
         private string? id;
 
+        /// <summary>
+        /// Gets the unique identifier of this timing (MiniProfiler property).
+        /// </summary>
         public string? Id
         {
             get => id;
@@ -59,6 +57,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private string? name;
 
+        /// <summary>
+        /// Gets the timing name (MiniProfiler property).
+        /// </summary>
         public string? Name
         {
             get => name;
@@ -78,6 +79,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private decimal? durationMilliseconds;
 
+        /// <summary>
+        /// Gets the value of how long this timing step took (MiniProfiler property).
+        /// </summary>
         public decimal? DurationMilliseconds
         {
             get => durationMilliseconds;
@@ -97,6 +101,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private decimal startMilliseconds;
 
+        /// <summary>
+        /// Gets the offset from the start of profiling (MiniProfiler property).
+        /// </summary>
         public decimal StartMilliseconds
         {
             get => startMilliseconds;
@@ -116,6 +123,9 @@ namespace MiniAnalyzer.Tree.Detail
 
         private Visibility visibility;
 
+        /// <summary>
+        /// Gets or sets the visibility state of this view-model.
+        /// </summary>
         public Visibility Visibility
         {
             get => visibility;
@@ -131,8 +141,30 @@ namespace MiniAnalyzer.Tree.Detail
 
         #endregion
 
+        /// <summary>
+        /// Gets the timing debug info view-model.
+        /// </summary>
         public TimingDebugInfoViewModel TimingDebugInfo { get; private set; }
 
+        /// <summary>
+        /// Gets the time chart of this result.
+        /// </summary>
         public TimeChartView TimeChart { get; private set; }
+
+        private async Task LoadContentCoreAsync(Timing timing)
+        {
+            await Task.Run(async () =>
+            {
+                Id = timing.Id.ToString();
+                Name = timing.Name;
+                DurationMilliseconds = timing.DurationMilliseconds;
+                StartMilliseconds = timing.StartMilliseconds;
+
+                await TimingDebugInfo.LoadContentAsync(timing.DebugInfo);
+                await TimeChart.UpdateTimesAsync(timing);
+
+                Visibility = Visibility.Visible;
+            });
+        }
     }
 }
